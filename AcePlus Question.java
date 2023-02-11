@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Question {
+public class AppQuestion {
    private String prompt;
    
    private String[] answers;
@@ -10,7 +10,7 @@ public class Question {
    private int hintCounter = 0;
    private int penalty;
    
-   Question(String prompt, String[] answers, int rightAnswer, String[] hints, int penalty) {
+   AppQuestion(String prompt, String[] answers, int rightAnswer, String[] hints, int penalty) {
       this.prompt = prompt;
       this.answers = answers;
       this.rightAnswer = rightAnswer;
@@ -33,11 +33,13 @@ public class Question {
             
             //return this.hints[hintCounter++];
             System.out.println(this.hints[hintCounter++]);
+            System.out.println();
             return;
             //return true;
          }
          else {
             System.out.println("You don't have enough coins to purchase a hint");
+            System.out.println();
             return;
             //return false;
             
@@ -46,6 +48,7 @@ public class Question {
       }
       else {
          System.out.println("No more hints available");
+         System.out.println();
          return;
          //return false;
          
@@ -95,6 +98,7 @@ public class Question {
          }
          
          System.out.println(numAnswers + 1 + " - Get a hint for " + penalty + " coins");
+         System.out.println();
       } while (getUserAnswer(numCoins) == false);
    }
 }
@@ -110,7 +114,7 @@ class Test {
       String[] hints1 = {};
       int penalty1 = 500;
       
-      Question question1 = new Question(prompt1, answers1, rightAnswer1, hints1, penalty1);
+      AppQuestion question1 = new AppQuestion(prompt1, answers1, rightAnswer1, hints1, penalty1);
       
       question1.presentQuestion(numCoins);
       
@@ -122,7 +126,7 @@ class Test {
       String[] hints2 = {"Cout stands for console output and cin stands for console input"};
       int penalty2 = 100;
       
-      Question question2 = new Question(prompt2, answers2, rightAnswer2, hints2, penalty2);
+      AppQuestion question2 = new AppQuestion(prompt2, answers2, rightAnswer2, hints2, penalty2);
       
       question2.presentQuestion(numCoins);
    }
