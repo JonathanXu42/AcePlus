@@ -3,13 +3,18 @@ import java.util.Scanner;
 public class Question {
    private String prompt;
    
+   //The list of possible answers will be initialized as an array, and "rightAnswer" will contain the index of the correct answer
    private String[] answers;
    private int rightAnswer;
- 
+   
+   //The list of hints will be initialized as an array and accessed sequentially, and "hintCounter" keeps track of which hints have been dispensed.
+   //For each question, each hint costs the same number of coins. Hints for different questions may cost different amounts.
    private String[] hints;
    private int hintCounter = 0;
    private int penalty;
    
+   //When the user starts a lesson, the game will initialize the questions one by one. This constructor initializes all of the questions' attributes
+   //except for hintCounter, which is incremented every time the user receives a hint
    Question(String prompt, String[] answers, int rightAnswer, String[] hints, int penalty) {
       this.prompt = prompt;
       this.answers = answers;
@@ -22,18 +27,48 @@ public class Question {
       return this.prompt;
    }
    
-   public void getHint(int numCoins) {
+   /*
+   When the user asks for a hint, three scenarios are possible:
+   1) There are no (more) hints available. This occurs when hintCounter >= the number of hints available. When hintCounter = 0, it's the index of the
+   first hint, when hintCounter = 1, it's the index of the second hint, etc.
+   
+   2) There are more hints available, but the user doesn't have enough coins (represented by Test.numCoins) to pay for it. The user can't have a negative
+   coin balance, so the user won't receive a hint and no coins will be deducted from their account.
+   
+   3) There are more hints available and the user has enough coins to pay for one. The user already knows the price of the hint from the question prompt,
+   and getHint() will tell them what their new account balance is. The price will be deducted from Test.numCoins, which is a static variable and there's
+   only one in existence per user.
+   
+   hintCounter will also be incremented, so that if this is the last hint, the next time the user asks for a hint, the user will be informed that no
+   more hints are available.
+   */
+   
+   //Originally, numCoins was a static variable in Test and was passed into presentQuestion(), where it was passed into getUserAnswer(), where it was
+   //passed into getHint(). The problem with this was that if a question had multiple hints and a fee was assessed for each one, getHint() would correctly
+   //deduct coins from Test.numCoins, but the value of Test.numCoins() that getHint() had access to wouldn't update until the user moved onto the next
+   //question.
+   
+   //This was because each time Test.numCoins was passed into these functions, they received a copy of the value and did not receive a pointer to it.
+   //Therefore, when they modified the value of Test.numCoins, they were modifying the value stored in some other address in memory and were not
+   //actually modifying Test.numCoins.
+   
+   //By using the getter and setter for the Test.numCoins variable instead of passing copies of it, when these functions modify Test.numCoins, they
+   //modify the actual value instead of modifying a copy, and the coin balance is updated after every hint instead of after every question.
+   
+   //public void getHint(int numCoins) {
+   public void getHint() {
       int numHints = hints.length;
       //System.out.println("There are " + numHints + " hints available");
       
       if (numHints > hintCounter) {
-         if (numCoins >= penalty) {
-            System.out.println("You have " + numCoins + " coins. You have " + (numCoins - penalty) + " coins left after purchasing this hint.");
-            numCoins = numCoins - penalty;
+         if (Test.numCoins >= penalty) {
+            System.out.println("You have " + Test.numCoins + " coins. You have " + (Test.numCoins - penalty) + " coins left after purchasing this hint.");
+            //numCoins = numCoins - penalty;
+            Test.setNumCoins(Test.numCoins - penalty);
             
             //return this.hints[hintCounter++];
-            System.out.println(this.hints[hintCounter++]);
-            System.out.println();
+            System.out.println(this.hints[hintCounter++]);     //++ is done in postfix so that the hintCounter is updated after its value is retrieved,
+            System.out.println();                              //and not before
             return;
             //return true;
          }
@@ -56,7 +91,11 @@ public class Question {
       }
    }
    
-   private boolean getUserAnswer(int numCoins) {
+   //getUserAnswer() is called by presentQuestion(), which prints out the question prompt and list of possible answers. getUserAnswer()'s four jobs are
+   //to get the user's input, verify that the user's input is valid, say whether the input is true or false, and call getHint(), if applicable. 
+   
+   //private boolean getUserAnswer(int numCoins) {
+   private boolean getUserAnswer() {
       //System.out.println(prompt);
          
       Scanner getInput = new Scanner(System.in);
@@ -68,11 +107,13 @@ public class Question {
          System.out.println("That is not one of the answer choices. Please choose something else.");
          userInput = getInput.nextInt();
          
-         //Remember to add exception checking for characters
+         //Not enough time to add exception checking for characters.
       }
       
       if (userInput == numAnswers + 1) {
-         getHint(numCoins);
+         //getHint(numCoins);
+         getHint();
+
          return false;
          //return getUserAnswer(numCoins);
       }
@@ -86,7 +127,8 @@ public class Question {
          return false;
    }
    
-   public void presentQuestion(int numCoins) {
+   //public void presentQuestion(int numCoins) {
+   public void presentQuestion() {
       do {
          System.out.println(prompt);
          System.out.println();
@@ -99,35 +141,54 @@ public class Question {
          
          System.out.println(numAnswers + 1 + " - Get a hint for " + penalty + " coins");
          System.out.println();
-      } while (getUserAnswer(numCoins) == false);
+      } while (getUserAnswer() == false);
+      //} while (getUserAnswer(numCoins) == false);
    }
 }
 
+/*
+class PlayerAccount {
+   public static int numCoins = 5000;
+   
+   public static void setNumCoins(int newNumCoins) {
+      numCoins = newNumCoins;
+      //System.out.println("setNumCoins has been called");
+   }
+}
+*/
+
 class Test {
    public static int numCoins = 5000;
-
+   
+   public static void setNumCoins(int newNumCoins) {
+      numCoins = newNumCoins;
+      //System.out.println("setNumCoins has been called");
+   }
+  
    public static void main(String[] args) {
       String prompt1 = "What is the flight speed of an unladen swallow?";
       String[] answers1 = {"I don't know that!", "45 mph", "75 mph", "Is that an African or European swallow?"};
       int rightAnswer1 = 4;
       //String rightAnswer1 = "Is that an African or European swallow?";
-      String[] hints1 = {};
+      String[] hints1 = {"Testing125"};
       int penalty1 = 500;
       
       Question question1 = new Question(prompt1, answers1, rightAnswer1, hints1, penalty1);
       
-      question1.presentQuestion(numCoins);
+      //question1.presentQuestion(PlayerAccount.numCoins);
+      question1.presentQuestion();
       
       
       
       String prompt2 = "How do you print the number 5 on the screen in C++?";
       String[] answers2 = {"cout << 5", "cin >> 5", "cout < 5", "cin > 5", "printf 5"};
       int rightAnswer2 = 1;
-      String[] hints2 = {"Cout stands for console output and cin stands for console input"};
+      String[] hints2 = {"Cout stands for console output and cin stands for console input", "Testing123"};
       int penalty2 = 100;
       
       Question question2 = new Question(prompt2, answers2, rightAnswer2, hints2, penalty2);
       
-      question2.presentQuestion(numCoins);
+      //question2.presentQuestion(PlayerAccount.numCoins);
+      question2.presentQuestion();
    }
 }
