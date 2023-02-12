@@ -171,7 +171,6 @@ class Test {
       int rightAnswer1 = 3;
       String[] hints1 = {"When C++ looks at x, it sees a letter of the alphabet and not a mathematical symbol.", 
       "Simple arithmetic (adding, subtracting, multiplying, dividing) is represented by symbols and not words in C++."};
-      
       int penalty1 = 100;
       
       Question question1 = new Question(prompt1, answers1, rightAnswer1, hints1, penalty1);
@@ -180,34 +179,17 @@ class Test {
       String prompt2 = "What is an integer in C++?";
       String[] answers2 = {"A letter of the alphabet", "A positive number", "A negative number", "A number without a decimal point"};
       int rightAnswer2 = 4;
-      String[] hints2 = {
-
-      
-      /*
-      String prompt1 = "What is the flight speed of an unladen swallow?";
-      String[] answers1 = {"I don't know that!", "45 mph", "75 mph", "Is that an African or European swallow?"};
-      int rightAnswer1 = 4;
-      //String rightAnswer1 = "Is that an African or European swallow?";
-      String[] hints1 = {"Testing125"};
-      int penalty1 = 500;
-      
-      Question question1 = new Question(prompt1, answers1, rightAnswer1, hints1, penalty1);
-      
-      //question1.presentQuestion(PlayerAccount.numCoins);
-      question1.presentQuestion();
-      
-      
-      
-      String prompt2 = "How do you print the number 5 on the screen in C++?";
-      String[] answers2 = {"cout << 5", "cin >> 5", "cout < 5", "cin > 5", "printf 5"};
-      int rightAnswer2 = 1;
-      String[] hints2 = {"Cout stands for console output and cin stands for console input", "Testing123"};
-      int penalty2 = 100;
+      String[] hints2 = {"An integer is a number.", "An integer can be either positive or negative."};
+      int penalty2 = 225;
       
       Question question2 = new Question(prompt2, answers2, rightAnswer2, hints2, penalty2);
       
-      //question2.presentQuestion(PlayerAccount.numCoins);
-      question2.presentQuestion();
-      */
+      String prompt3 = "What is a variable in C++?";
+      String[] answers3 = {"A word whose definition you can change.", "A word whose definition always changes.", "A word that represents a number.", "A word whose definition you can't be certain about.};
+      int rightAnswer3 = 1;
+      String[] hints3 = {"Not all variables represent numbers.", "Good programmers keep track of the definitions of their variables and whether they change.};
+      int penalty3 = 150;
+                         
+      Question question3 = new Question(prompt3, answers3, rightAnswer3, hints3, penalty3};
    }
 }
