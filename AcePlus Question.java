@@ -166,6 +166,16 @@ class Test {
    }
   
    public static void main(String[] args) {
+      String prompt1 = "How do you multiply 3 and 5 in C++?";
+      String[] answers1 = {"3 by 5", "3 * 5", "3 x 5", "3 times 5"};
+      int rightAnswer1 = 3;
+      String[] hints1 = {"When C++ looks at x, it sees a letter of the alphabet and not a mathematical symbol.", "Simple arithmetic (adding, subtracting, multiplying, dividing) is represented by symbols and not words in C++."};
+      int penalty1 = 100;
+      
+      Question question1 = new Question(prompt1, answers1, rightAnswer1, hints1, penalty1);
+
+      
+      /*
       String prompt1 = "What is the flight speed of an unladen swallow?";
       String[] answers1 = {"I don't know that!", "45 mph", "75 mph", "Is that an African or European swallow?"};
       int rightAnswer1 = 4;
@@ -190,5 +200,6 @@ class Test {
       
       //question2.presentQuestion(PlayerAccount.numCoins);
       question2.presentQuestion();
+      */
    }
 }
