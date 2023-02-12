@@ -169,7 +169,7 @@ class Test {
       String prompt1 = "How do you multiply 3 and 5 in C++?";
       String[] answers1 = {"3 by 5", "3 * 5", "3 x 5", "3 times 5"};
       int rightAnswer1 = 3;
-      //String[] hints1 = {"When C++ looks at x, it sees a letter of the alphabet and not a mathematical symbol.", 
+      String[] hints1 = {"When C++ looks at x, it sees a letter of the alphabet and not a mathematical symbol.", 
       "Simple arithmetic (adding, subtracting, multiplying, dividing) is represented by symbols and not words in C++."};
       
       int penalty1 = 100;
