@@ -171,7 +171,7 @@ class Test {
       int rightAnswer1 = 3;
       String[] hints1 = {"When C++ looks at x, it sees a letter of the alphabet and not a mathematical symbol.", 
       "Simple arithmetic (adding, subtracting, multiplying, dividing) is represented by symbols and not words in C++."};
-      int penalty1 = 100;
+      int penalty1 = 5;
       
       Question question1 = new Question(prompt1, answers1, rightAnswer1, hints1, penalty1);
 
@@ -180,7 +180,7 @@ class Test {
       String[] answers2 = {"A letter of the alphabet", "A positive number", "A negative number", "A number without a decimal point"};
       int rightAnswer2 = 4;
       String[] hints2 = {"An integer is a number.", "An integer can be either positive or negative."};
-      int penalty2 = 225;
+      int penalty2 = 4;
       
       Question question2 = new Question(prompt2, answers2, rightAnswer2, hints2, penalty2);
       
@@ -188,7 +188,7 @@ class Test {
       String[] answers3 = {"A word whose definition you can change.", "A word whose definition always changes.", "A word that represents a number.", "A word whose definition you can't be certain about.};
       int rightAnswer3 = 1;
       String[] hints3 = {"Not all variables represent numbers.", "Good programmers keep track of the definitions of their variables and whether they change.};
-      int penalty3 = 150;
+      int penalty3 = 6;
                          
       Question question3 = new Question(prompt3, answers3, rightAnswer3, hints3, penalty3};
    }
